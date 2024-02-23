@@ -1,0 +1,16 @@
+#!/usr/bin/env node
+
+const path = require("path");
+const childProcess = require("child_process");
+
+function getBinaryPath() {
+  // Windows binaries end with .exe so we need to special case them.
+  const binaryName =
+    process.platform === "win32" ? "frontastic.exe" : "frontastic";
+
+  return path.join(__dirname, binaryName);
+}
+
+childProcess.execFileSync(getBinaryPath(), process.argv.slice(2), {
+  stdio: "inherit",
+});
