@@ -13,5 +13,7 @@ jobs:
         with:
           node-version: "18"
       - name: Build
-        run: npx cli-npm-poc --version
+        run: |
+          npm install -g cli-npm-poc 
+          npm -v
         shell: cmd
