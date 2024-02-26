@@ -1,6 +1,6 @@
 {
   "name": "cli-npm-poc",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "bin": {
     "cli-npm-poc": "bin/cli"
   },
