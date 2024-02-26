@@ -14,3 +14,4 @@ jobs:
           node-version: "18"
       - name: Build
         run: npx cli-npm-poc --version
+        shell: cmd
