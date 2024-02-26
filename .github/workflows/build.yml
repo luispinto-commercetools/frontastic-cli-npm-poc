@@ -16,4 +16,5 @@ jobs:
         run: |
           npm install -g cli-npm-poc 
           npm -v
+          cli-npm-poc init
         shell: cmd
