@@ -13,8 +13,11 @@ jobs:
         with:
           node-version: "18"
       - name: Build
-        run: |
-          npm install -g cli-npm-poc 
-          npm -v
-          cli-npm-poc init
+        run: npm install -g cli-npm-poc
+        shell: cmd
+      - name: check version
+        run: npm -v
+        shell: cmd
+      - name: init
+        run: cli-npm-poc init
         shell: cmd
