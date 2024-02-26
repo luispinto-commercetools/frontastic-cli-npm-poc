@@ -8,16 +8,17 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
+        node-version: [18, 20]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: set up node js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: ${{ matrix.node-version }}
       - name: Build
         run: npm install -g cli-npm-poc
-      - name: check version
-        run: npm -v
-      - name: init
-        run: cli-npm-poc init poc
+      - name: help
+        run: cli-npm-poc --help
+      - name: version
+        run: cli-npm-poc --version
