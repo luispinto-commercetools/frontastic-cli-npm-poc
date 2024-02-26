@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
-        shell: [cmd, bash]
+        shells: [cmd, bash]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
@@ -18,10 +18,10 @@ jobs:
           node-version: "18"
       - name: Build
         run: npm install -g cli-npm-poc
-        shell: ${{ matrix.shell }}
+        shell: ${{ matrix.shells }}
       - name: check version
         run: npm -v
-        shell: ${{ matrix.shell }}
+        shell: ${{ matrix.shells }}
       - name: init
         run: cli-npm-poc init
-        shell: ${{ matrix.shell }}
+        shell: ${{ matrix.shells }}
