@@ -3,8 +3,8 @@ const os = require("os");
 const tar = require("tar");
 const path = require("path");
 const https = require("https");
+const yauzl = require("yauzl");
 const stream = require("stream");
-const unzipper = require("unzipper");
 
 const RELEASE_VERSION = "2.4.0";
 const BINARY_DISTRIBUTION_PACKAGES = {
@@ -69,13 +69,41 @@ async function fetchReleaseAssets() {
 
 async function unzip(fileBuffer) {
   console.debug("extracting zip file ...");
-  const readStream = new stream.PassThrough();
-  readStream.end(fileBuffer);
   return new Promise((resolve, reject) => {
-    readStream
-      .pipe(unzipper.Extract({ path: "./" }))
-      .on("finish", resolve)
-      .on("error", reject);
+    yauzl.fromBuffer(
+      fileBuffer,
+      { lazyEntries: true },
+      function (err, zipfile) {
+        if (err) throw err;
+        zipfile.on("entry", (entry) => {
+          if (/\/$/.test(entry.fileName)) {
+            // Directory file names end with '/'.
+            // Note that entries for directories themselves are optional.
+            // An entry's fileName implicitly requires its parent directories to exist.
+            zipfile.readEntry();
+          } else {
+            // file entry
+            fs.mkdir(
+              path.dirname(entry.fileName),
+              { recursive: true },
+              (err) => {
+                if (err) reject(err);
+                zipfile.openReadStream(entry, (err, readStream) => {
+                  if (err) reject(err);
+                  const writeStream = fs.createWriteStream(entry.fileName);
+                  readStream.pipe(writeStream);
+                  writeStream.on("close", () => {
+                    zipfile.readEntry();
+                  });
+                });
+              }
+            );
+          }
+        });
+        zipfile.on("end", resolve);
+        zipfile.readEntry();
+      }
+    );
   });
 }
 
@@ -96,13 +124,17 @@ async function downloadBinaryFromGithubReleases() {
     ? await unzip(fileBuffer)
     : await untar(fileBuffer);
 
-  fs.rename(binaryName, path.join("bin", binaryName), (error) => {
-    if (error) {
-      console.error("Error moving file:", error);
-    } else {
-      console.log("File moved successfully!");
+  fs.rename(
+    path.join(__dirname, binaryName),
+    path.join(__dirname, "bin", binaryName),
+    (error) => {
+      if (error) {
+        console.error("Error moving file:", error);
+      } else {
+        console.log("File moved successfully!");
+      }
     }
-  });
+  );
 }
 
 downloadBinaryFromGithubReleases();

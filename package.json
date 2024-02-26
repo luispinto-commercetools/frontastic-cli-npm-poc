@@ -9,6 +9,6 @@
   },
   "dependencies": {
     "tar": "^6.2.0",
-    "unzipper": "^0.10.14"
+    "yauzl": "^3.1.0"
   }
 }
