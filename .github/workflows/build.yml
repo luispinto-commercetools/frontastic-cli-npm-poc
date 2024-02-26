@@ -5,7 +5,11 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+        shell: [cmd, bash]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v3
       - name: set up node js
@@ -14,10 +18,10 @@ jobs:
           node-version: "18"
       - name: Build
         run: npm install -g cli-npm-poc
-        shell: cmd
+        shell: ${{ matrix.shell }}
       - name: check version
         run: npm -v
-        shell: cmd
+        shell: ${{ matrix.shell }}
       - name: init
         run: cli-npm-poc init
-        shell: cmd
+        shell: ${{ matrix.shell }}
