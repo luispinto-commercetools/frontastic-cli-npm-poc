@@ -1,6 +1,6 @@
-# npm-cli-poc
+# cli-npm-poc
 
-![license](https://img.shields.io/npm/l/npm-cli-poc)
+![license](https://img.shields.io/npm/l/cli-npm-poc)
 
 A proof of concept Node.js package for wrapping frontastic-cli binaries, enabling their usage within a Node application seamlessly.
 
@@ -17,14 +17,14 @@ This package provides a convenient way to incorporate frontastic-cli functionali
 
 ## Installation
 
-To install `npm-cli-poc`, you can either install it globally to use it as a CLI tool or locally to use it within your Node.js projects.
+To install `cli-npm-poc`, you can either install it globally to use it as a CLI tool or locally to use it within your Node.js projects.
 
 ### Global Installation (CLI)
 
 To install globally and use it as a CLI tool:
 
 ```bash
-npm install -g npm-cli-poc
+npm install -g cli-npm-poc
 ```
 
 ### Local Installation (Library)
@@ -32,14 +32,14 @@ npm install -g npm-cli-poc
 To install locally and use it within your Node.js projects:
 
 ```bash
-npm install npm-cli-poc
+npm install cli-npm-poc
 ```
 
 ## Usage
 
 ### Global Usage (CLI)
 
-As a global package, you can use `npm-cli-poc` from the command line to access version information and basic functionalities. Here are some examples:
+As a global package, you can use `cli-npm-poc` from the command line to access version information and basic functionalities. Here are some examples:
 
 ```bash
 # Get the package version
@@ -54,10 +54,10 @@ cli-npm-poc some-command
 
 ### Local Usage (Library)
 
-Once installed locally, you can import and use `npm-cli-poc` in your Node.js project. Here's a basic example of how to use it:
+Once installed locally, you can import and use `cli-npm-poc` in your Node.js project. Here's a basic example of how to use it:
 
 ```javascript
-const npmCliPoc = require('npm-cli-poc');
+const npmCliPoc = require('cli-npm-poc');
 
 // Example usage
 npmCliPoc.runBinary('--version');
