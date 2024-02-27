@@ -22,3 +22,5 @@ jobs:
         run: cli-npm-poc --help
       - name: version
         run: cli-npm-poc --version
+      - name: version
+        run: cli-npm-poc init
